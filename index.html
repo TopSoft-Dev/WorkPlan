@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan Działania - Topciu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header z kontrolkami -->
+        <header class="header no-print">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">📋</span>
+                    <h1>Plan Działania</h1>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" id="addActionBtn">
+                        <span class="btn-icon">➕</span>
+                        Dodaj działanie
+                    </button>
+                    <button class="btn btn-primary" id="printBtn">
+                        <span class="btn-icon">🖨️</span>
+                        Drukuj
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Modal dodawania działania -->
+        <div class="modal-overlay" id="modalOverlay">
+            <div class="modal">
+                <div class="modal-header">
+                    <h2>Dodaj nowe działanie</h2>
+                    <button class="modal-close" id="modalClose">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="actionName">Nazwa działania</label>
+                        <input type="text" id="actionName" placeholder="np. Ćwiczenia, Posiłki do 18:00...">
+                    </div>
+                    <div class="form-group">
+                        <label for="cycleCount">Liczba kratek w cyklu</label>
+                        <input type="number" id="cycleCount" value="3" min="1" max="10">
+                    </div>
+                    <div class="form-group">
+                        <label for="totalCycles">Liczba cykli</label>
+                        <input type="number" id="totalCycles" value="8" min="1" max="20">
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="hasWeightTracking">
+                            <span class="checkmark"></span>
+                            Dodaj pole na wagę (raportowanie po każdym cyklu)
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="modalCancel">Anuluj</button>
+                    <button class="btn btn-primary" id="modalConfirm">Dodaj</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Główna zawartość - plan działania -->
+        <main class="main-content" id="mainContent">
+            <div class="main-header">
+                <div class="date-container">
+                    <label for="planDateInput">📅 Okres:</label>
+                    <input type="text" id="planDateInput" placeholder="np. Styczeń 2026 / Tydzień 3">
+                </div>
+            </div>
+
+            <div class="actions-container" id="actionsContainer">
+                <!-- Tutaj będą dynamicznie dodawane działania -->
+            </div>
+
+            <div class="empty-state" id="emptyState">
+                <div class="empty-icon">📝</div>
+                <h2>Brak działań</h2>
+                <p>Kliknij przycisk "Dodaj działanie" aby rozpocząć śledzenie swoich celów!</p>
+            </div>
+        </main>
+
+        <!-- Stopka -->
+        <footer class="footer no-print">
+            <p>💪 Trzymaj tempo i osiągaj cele! • Topciu Edition</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
