@@ -42,8 +42,26 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
+                        <label>Wybierz domenę (opcjonalnie)</label>
+                        <div class="domain-selector" id="domainSelector">
+                            <button type="button" class="domain-btn" data-domain="ciało" title="Ciało">
+                                <span class="domain-icon">🧘</span>
+                                <span class="domain-name">Ciało</span>
+                            </button>
+                            <button type="button" class="domain-btn" data-domain="umysł" title="Umysł">
+                                <span class="domain-icon">💡</span>
+                                <span class="domain-name">Umysł</span>
+                            </button>
+                            <button type="button" class="domain-btn" data-domain="dusza" title="Dusza">
+                                <span class="domain-icon">✨</span>
+                                <span class="domain-name">Dusza</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="actionName">Nazwa działania</label>
                         <input type="text" id="actionName" placeholder="np. Ćwiczenia, Posiłki do 18:00...">
+                        <div id="domainDefinition" class="domain-definition"></div>
                     </div>
                     <div class="form-group">
                         <label for="cycleCount">Liczba kratek w cyklu</label>

@@ -22,6 +22,24 @@ const actionNameInput = document.getElementById('actionName');
 const cycleCountInput = document.getElementById('cycleCount');
 const totalCyclesInput = document.getElementById('totalCycles');
 const hasWeightTrackingInput = document.getElementById('hasWeightTracking');
+const domainSelector = document.getElementById('domainSelector');
+const domainDefinition = document.getElementById('domainDefinition');
+const domainBtns = document.querySelectorAll('.domain-btn');
+
+const DOMAIN_DATA = {
+    'ciało': {
+        icon: '🧘',
+        definition: 'Ćwiczenia, Dieta, Czas spania, Regeneracja, Obserwacja stanów zewnetrzych/wewnetrznych'
+    },
+    'umysł': {
+        icon: '💡',
+        definition: 'Czytanie, Nauka, Rozmyslanie, Analiza, Kontrola zachowania, Rozwój'
+    },
+    'dusza': {
+        icon: '✨',
+        definition: 'Ekspresja, Tworzenie, Budowanie, Moralność, Kreatywność, Słuszne postepowanie, Docenianie, Wybaczanie, Poświęcenie, Czas z bliskimi'
+    }
+};
 
 // ============================================
 // INICJALIZACJA
@@ -69,6 +87,33 @@ function setupEventListeners() {
 
     // Inicjalizacja Drag & Drop dla kontenera
     setupDragAndDrop();
+
+    // Domeny
+    setupDomainListeners();
+}
+
+function setupDomainListeners() {
+    domainBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const domainKey = btn.dataset.domain;
+            const data = DOMAIN_DATA[domainKey];
+
+            if (data) {
+                // Dodaj klasę active
+                domainBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Ustaw nazwę i ikonę
+                actionNameInput.value = `${data.icon} ${btn.querySelector('.domain-name').innerText}`;
+
+                // Pokaż definicję
+                domainDefinition.innerText = data.definition;
+                domainDefinition.classList.add('active');
+
+                actionNameInput.focus();
+            }
+        });
+    });
 }
 
 function setupDragAndDrop() {
@@ -100,6 +145,13 @@ function openModal() {
     cycleCountInput.value = '3';
     totalCyclesInput.value = '8';
     hasWeightTrackingInput.checked = false;
+
+    // Resetuj domeny
+    domainBtns.forEach(b => b.classList.remove('active'));
+    domainDefinition.innerText = '';
+    domainDefinition.classList.remove('active');
+    actionNameInput.style.borderColor = '';
+
     actionNameInput.focus();
 }
 
@@ -131,6 +183,7 @@ function addAction() {
         cycleCount,
         totalCycles,
         hasWeightTracking,
+        domainDefinition: domainDefinition.classList.contains('active') ? domainDefinition.innerText : '',
         cycles: []
     };
 
@@ -200,6 +253,17 @@ function renderActions() {
 }
 
 function createActionCard(action) {
+    // Fallback dla akcji bez zapisanej definicji (np. starsze zadania)
+    let displayDefinition = action.domainDefinition || '';
+    if (!displayDefinition) {
+        for (const key in DOMAIN_DATA) {
+            if (action.name.includes(DOMAIN_DATA[key].icon)) {
+                displayDefinition = DOMAIN_DATA[key].definition;
+                break;
+            }
+        }
+    }
+
     const card = document.createElement('div');
     card.className = 'action-card';
     card.draggable = true;
@@ -248,6 +312,11 @@ function createActionCard(action) {
                 ${action.cycles.map((cycle, cycleIdx) => createCycleRow(action, cycle, cycleIdx)).join('')}
             </div>
         </div>
+        ${displayDefinition ? `
+            <div class="action-footer">
+                <p class="domain-info">${escapeHtml(displayDefinition)}</p>
+            </div>
+        ` : ''}
     `;
     return card;
 }
